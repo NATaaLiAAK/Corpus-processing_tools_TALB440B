@@ -138,6 +138,15 @@ Pour **l'étape préliminaire numéro 1**, j'ai dû :
 > 3. Utiliser ce *jeton d'accès* dans mon **script Python** pour authentifier mes *requêtes API*.
 >    
 > Après avoir créé l'application, j'ai vu apparaître mon jeton d'accès généré.
+>
+> Après avoir créé mon application sur Mastodon, j'ai obtenu trois informations importantes :
+>
+> - **Client Key (Clé client)** : Il s'agit d'un identifiant unique pour mon application. Il est > utilisé pour *identifier* mon application lors de l'interaction avec l'API Mastodon.
+> 
+> - **Client Secret (Secret client)** : C'est une clé secrète associée à mon application. Elle  > est utilisée pour *authentifier* mon application lors de l'interaction avec l'API Mastodon.
+> 
+> - **Your Access Token (Votre jeton d'accès)** : C'est le jeton d'accès API qui me permet
+> d'authentifier mon application auprès de Mastodon et d'accéder à certaines fonctionnalités de > l'API, en fonction des permissions que j'ai demandées lors de la création de l'application.
 
 
 ## Lire et rechercher des toots publics liés aux catastrophes.
@@ -151,7 +160,7 @@ import pandas as pd
 
 # Connect to Mastodon API
 mastodon = Mastodon(
-    access_token='MY_ACCESS_TOKEN',  # Mon jeton d'accès API
+    access_token='JrtkPRLfRZ0wWur60hSBZE2d4O8trtJR66Mlo_q8TAQ',  # Mon jeton d'accès API
     api_base_url='https://mastodon.social/@_naTALia_IA'  # L'URL de mon instance Mastodon
 )
 
