@@ -169,3 +169,7 @@ data/raw/*
 # Ignore les fichiers de données traitées
 data/processed/*
 
+# Ignore le fichier .DS_Store généré par macOS
+# Ce fichier est spécifique à macOS et stocke les métadonnées du dossier, telles que la position des icônes et des vignettes.
+# Il n'est pas nécessaire dans le cadre de mon projet et peut être ignoré.
+.DS_Store
