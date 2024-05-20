@@ -159,5 +159,13 @@ cython_debug/
 #  option (not recommended) you can uncomment the following to ignore the entire idea folder.
 #.idea/
 
-# Configuration
+
+# Ignore les fichiers de configuration contenant des informations sensibles
 config.py
+
+# Ignore les fichiers de données brutes
+data/raw/*
+
+# Ignore les fichiers de données traitées
+data/processed/*
+
