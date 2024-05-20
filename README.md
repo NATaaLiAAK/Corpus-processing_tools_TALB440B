@@ -157,11 +157,12 @@ Pour **l'étape préliminaire numéro 1**, j'ai dû :
 
 from mastodon import Mastodon
 import pandas as pd
+import config
 
 # Connect to Mastodon API
 mastodon = Mastodon(
-    access_token='JrtkPRLfRZ0wWur60hSBZE2d4O8trtJR66Mlo_q8TAQ',  # Mon jeton d'accès API
-    api_base_url='https://mastodon.social/@_naTALia_IA'  # L'URL de mon instance Mastodon
+    access_token=config.ACCESS_TOKEN,  # Mon jeton d'accès API
+    api_base_url=config.BASE_URL  # L'URL de mon instance Mastodon
 )
 
 # Fonction pour récupérer des toots contenant des mots-clés spécifiques
@@ -175,9 +176,13 @@ def get_toots_with_keywords(keywords, max_toots=1000):
                 'content': status['content'],
                 'keywords': keyword,
                 'location': status['account']['location'] if 'location' in status['account'] else None,
-                'is_disaster': 1  # Étiqueter manuellement les toots liés aux catastrophes avec 1, les autres avec 0
+                'is_disaster': 1  # J'étiquette les toots liés aux catastrophes avec 1, les autres avec 0
             })
-    return toots
+        if 'next' in results['links']:
+            results = mastodon.fetch_next(results)
+        else:
+            break
+return toots
 
 # Liste de mots-clés liés aux catastrophes
 disaster_keywords = ['earthquake', 'flood', 'wildfire', 'accident']
@@ -189,7 +194,7 @@ toots = get_toots_with_keywords(disaster_keywords)
 df = pd.DataFrame(toots)
 
 # Enregistrer dans un fichier CSV
-df.to_csv('mastodon_disaster_toots.csv', index=False)
+df.to_csv('data/raw/mastodon_disaster_toots.csv', index=False)
 
 # Exemples d'utilisation des permissions supplémentaires
 # Lire les informations de mon propre profil
@@ -217,3 +222,39 @@ print(f"Following: {following}")
 3. **followers** et **following** : Utilise "read:follows" pour obtenir les listes de mes followers et des comptes que je suis.
 
 Ces ajouts peuvent enrichir mon analyse et fournir des données supplémentaires intéressantes.
+
+
+
+## Configuration du projet
+
+#### J'ai mis dans le fichier `config.py` mon _URL de base Mastodon_ et mon _jeton d'accès API_.
+
+En isolant les informations sensibles dans un fichier de configuration séparé, je maintiens une séparation claire entre le code de mon application et les données sensibles. Cela facilite la gestion des informations sensibles et réduit les risques de divulgation accidentelle.
+
+
+
+## requirements.txt
+
+#### Le fichier `requirements.txt` est utilisé pour répertorier toutes les dépendances requises pour exécuter correctement mon application ou projet Python. Voici ce que font les trois packages listés dans mon fichier _requirements.txt_ :
+
+1. **Mastodon.py** : Il s'agit d'une bibliothèque Python pour interagir avec l'API Mastodon, qui est utilisée dans mon script pour collecter des toots à partir de l'instance Mastodon.
+   
+2. **pandas** : Pandas est une bibliothèque Python populaire pour la manipulation et l'analyse des données. Elle est utilisée dans mon script pour convertir les données récupérées en un DataFrame, une structure de données tabulaire puissante.
+   
+3. **textblob** : TextBlob est une bibliothèque Python pour le traitement du langage naturel (NLP). Elle fournit des outils pour la classification de texte, l'analyse de sentiments, la tokenisation, la lemmatisation, et d'autres tâches NLP. Dans mon cas, je l'utilise pour l'analyse de sentiments des toots récupérés à partir de Mastodon.
+
+
+
+## .gitignore
+
+#### Dans le fichier `.gitignore` j'ai mis les informations suivantes :
+
+`# Ignore les fichiers de configuration contenant des informations sensibles`
+`config.py`
+
+`# Ignore les fichiers de données brutes`
+`data/raw/*`
+
+`# Ignore les fichiers de données traitées`
+`data/processed/*`
+
