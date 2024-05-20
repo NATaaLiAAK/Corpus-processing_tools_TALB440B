@@ -250,11 +250,16 @@ En isolant les informations sensibles dans un fichier de configuration séparé,
 #### Dans le fichier `.gitignore` j'ai mis les informations suivantes :
 
 `# Ignore les fichiers de configuration contenant des informations sensibles`
+
 `config.py`
 
+
 `# Ignore les fichiers de données brutes`
+
 `data/raw/*`
 
+
 `# Ignore les fichiers de données traitées`
+
 `data/processed/*`
 
